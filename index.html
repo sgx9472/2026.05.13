@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>白沙屯隨香閣 | Baishatun Select - 跟著媽祖走，結緣在心頭</title>
+    <!-- 引入 Google Fonts: 襯線體用於標題，非襯線體用於內文 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FDFCF0;        /* 禪意米白 */
+            --primary-color: #FF85A2;   /* 粉紅超跑色 */
+            --accent-color: #FFD700;    /* 進香旗黃金 */
+            --dark-color: #4A3728;      /* 深木頭棕 */
+            --text-color: #333333;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background-color: rgba(253, 252, 240, 0.95);
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .cart-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), 
+                        url('https://images.unsplash.com/photo-1545641203-7d072a14e3b2?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            font-weight: 300;
+        }
+
+        .section-title {
+            text-align: center;
+            padding: 5rem 0 2rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '勇';
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            background: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Noto Sans TC';
+        }
+
+        .product-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5% 5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .product-name {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+        }
+
+        .add-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .add-btn:hover {
+            background-color: #f06a8d;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 2001;
+            padding: 2.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .cart-item-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .cart-footer {
+            border-top: 1px solid #ddd;
+            padding-top: 1.5rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 900;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white);
+            padding: 4rem 5%;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="#" class="logo">白沙屯隨香閣</a>
+        <ul class="nav-links">
+            <li><a href="#products">結緣商品</a></li>
+            <li><a href="#">進香故事</a></li>
+            <li><a href="#">神轎動態</a></li>
+        </ul>
+        <button class="cart-btn" id="openCart">
+            🛒 <span class="cart-count" id="countDisplay">0</span>
+        </button>
+    </nav>
+
+    <header class="hero">
+        <h1 class="serif">跟著媽祖走，結緣在心頭</h1>
+        <p>每一份紀念，都是對信仰的溫柔隨行</p>
+    </header>
+
+    <section id="products">
+        <div class="section-title">
+            <h2 class="serif">隨香文創・限量結緣</h2>
+        </div>
+        <div class="product-grid" id="productGrid">
+            <!-- 由 JavaScript 動態生成 -->
+        </div>
+    </section>
+
+    <div class="cart-overlay" id="overlay"></div>
+    <aside class="cart-sidebar" id="sidebar">
+        <div class="cart-header">
+            <h3 class="serif">已選結緣品</h3>
+            <button id="closeCart" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+        </div>
+        <div class="cart-items" id="cartContainer">
+            <!-- 購物車品項 -->
+        </div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>合計</span>
+                <span>NT$ <span id="totalPrice">0</span></span>
+            </div>
+            <button class="add-btn" style="background-color: var(--dark-color);">前往結帳</button>
+        </div>
+    </aside>
+
+    <footer>
+        <span class="serif footer-logo">白沙屯隨香閣</span>
+        <p style="margin-bottom: 1.5rem;">拱天宮媽祖進香紀念・文化創意館</p>
+        <div class="footer-links">
+            <a href="#">關於我們</a>
+            <a href="https://github.com">GitHub</a>
+            <a href="#">服務條款</a>
+        </div>
+        <p style="font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 2rem;">© 2024 Baishatun Select. Built with Dev Vibe.</p>
+    </footer>
+
+    <script>
+        /* 1. 商品數據定義 */
+        const PRODUCTS = [
+            { id: 1, name: "勇字進香排汗衫", price: 450, img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=500" },
+            { id: 2, name: "粉紅超跑微縮模型", price: 1280, img: "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?auto=format&fit=crop&q=80&w=500" },
+            { id: 3, name: "隨香結緣帆布袋", price: 380, img: "https://images.unsplash.com/photo-1544816153-12ad5d7132a1?auto=format&fit=crop&q=80&w=500" },
+            { id: 4, name: "進香旗紀念金幣", price: 250, img: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&q=80&w=500" },
+            { id: 5, name: "轎班專用遮陽帽", price: 320, img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&q=80&w=500" },
+            { id: 6, name: "白沙屯媽祖平安符", price: 100, img: "https://images.unsplash.com/photo-1590739156644-80257e82845c?auto=format&fit=crop&q=80&w=500" }
+        ];
+
+        let cart = [];
+
+        /* 2. 初始化渲染 */
+        window.onload = () => {
+            renderProducts();
+            initListeners();
+        };
+
+        /* 3. 渲染商品列表 */
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = PRODUCTS.map(p => `
+                <div class="product-card">
+                    <div class="product-img"><img src="${p.img}" alt="${p.name}"></div>
+                    <div class="product-info">
+                        <h3 class="product-name">${p.name}</h3>
+                        <p class="product-price">NT$ ${p.price}</p>
+                        <button class="add-btn" onclick="addToCart(${p.id})">加入結緣袋</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* 4. 購物車邏輯 */
+        function addToCart(id) {
+            const item = PRODUCTS.find(p => p.id === id);
+            const inCart = cart.find(c => c.id === id);
+            
+            if (inCart) {
+                inCart.qty++;
+            } else {
+                cart.push({...item, qty: 1});
+            }
+            updateCartUI();
+            openCart();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartContainer');
+            const totalDisplay = document.getElementById('totalPrice');
+            const countDisplay = document.getElementById('countDisplay');
+
+            // 更新數量標籤
+            countDisplay.innerText = cart.reduce((acc, curr) => acc + curr.qty, 0);
+
+            // 更新列表
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; margin-top:2rem;">結緣袋空空的，跟著媽祖出發吧！</p>';
+            } else {
+                container.innerHTML = cart.map(c => `
+                    <div class="cart-item">
+                        <img src="${c.img}" class="cart-item-img">
+                        <div style="flex-grow:1">
+                            <div style="font-weight:700; font-size:0.9rem">${c.name}</div>
+                            <div style="font-size:0.8rem; color:#666">NT$ ${c.price} x ${c.qty}</div>
+                        </div>
+                        <button onclick="removeFromCart(${c.id})" style="background:none; border:none; color:red; cursor:pointer;">刪除</button>
+                    </div>
+                `).join('');
+            }
+
+            // 更新金額
+            const total = cart.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+            totalDisplay.innerText = total.toLocaleString();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        }
+
+        /* 5. UI 交互監聽 */
+        function initListeners() {
+            // 導覽列滾動變色
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+
+            // 購物車開關
+            document.getElementById('openCart').onclick = openCart;
+            document.getElementById('closeCart').onclick = closeCart;
+            document.getElementById('overlay').onclick = closeCart;
+        }
+
+        function openCart() {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
